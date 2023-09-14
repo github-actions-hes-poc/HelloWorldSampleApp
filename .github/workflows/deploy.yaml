@@ -56,7 +56,11 @@ jobs:
          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY }}
          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
          aws-region: ${{ secrets.AWS_REGION }}
-
+         
+     - name: Delete the unzipped folder to allow new builds gracefully
+       shell: powershell
+       run: Remove-Item 'C:\actions-runner\_work\output' -Recurse
+       
      - name: Download the zip file from S3 to EC2 folder
        shell: cmd
        run: C:\"Program Files"\Amazon\AWSCLIV2\aws s3 cp s3://dotnet-s3-cicd-bucket/HelloWorldSampleApp.zip "C:\actions-runner\_work"
