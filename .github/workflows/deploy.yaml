@@ -60,8 +60,8 @@ jobs:
      - name: Delete the unzipped folder & wwwroot folder to allow new builds gracefully
        shell: powershell
        run: |
-         Remove-Item -Recurse C:\inetpub\wwwroot\* -Exclude aspnet_client
-         # Remove-Item 'C:\actions-runner\_work\output' -Recurse
+         Remove-Item 'C:\actions-runner\_work\output' -Recurse
+         # Remove-Item -Recurse C:\inetpub\wwwroot\* -Exclude aspnet_client
          # Remove-Item 'C:\inetpub\wwwroot' -Recurse
        
      - name: Download the zip file from S3 to EC2 folder
