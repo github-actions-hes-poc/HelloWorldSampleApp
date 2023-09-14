@@ -56,6 +56,12 @@ jobs:
          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY }}
          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
          aws-region: ${{ secrets.AWS_REGION }}
+     
+     - name: Delete the unzipped folder & wwwroot folder to allow new builds gracefully
+       shell: powershell
+       run: |
+         Remove-Item 'C:\actions-runner\_work\output' -Recurse
+         Remove-Item 'C:\inetpub\wwwroot' -Recurse
        
      - name: Download the zip file from S3 to EC2 folder
        shell: cmd
@@ -72,11 +78,5 @@ jobs:
          Start-Process powershell -ArgumentList "iisreset /stop" -Verb RunAs
          Copy-Item -Path "C:\actions-runner\_work\output\Content\D_C\a\HelloWorldSampleApp\HelloWorldSampleApp\HelloWorldSampleApp\obj\Release\Package\PackageTmp\*" -Destination "C:\inetpub\wwwroot" -Recurse -Force
          Start-Process powershell -ArgumentList "iisreset /start" -Verb RunAs
-
-     # - name: Delete the unzipped folder & wwwroot folder to allow new builds gracefully
-     #   shell: powershell
-     #   run: |
-     #     Remove-Item 'C:\actions-runner\_work\output' -Recurse
-     #     Remove-Item 'C:\inetpub\wwwroot' -Recurse
       
     
