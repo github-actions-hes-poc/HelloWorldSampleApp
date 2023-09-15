@@ -44,7 +44,7 @@ jobs:
            aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
            aws-region: ${{ secrets.AWS_REGION }}
 
-       - name: Get git commit SHA
+       - name: Get Git commit SHA
          env:
            SHA_ID: $(git rev-parse --short=4 HEAD)
          run: echo ${{ env.SHA_ID }}
