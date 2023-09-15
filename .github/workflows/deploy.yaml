@@ -80,7 +80,7 @@ jobs:
       - name: Unzipping the Zip file
         shell: powershell
         run: |
-          Expand-Archive -Path ${{env.ZIP_DOWNLOAD_LOCATION}}\HelloWorldSampleApp.zip -DestinationPath {{env.DESTINATION }}
+          Expand-Archive -Path ${{ env.ZIP_DOWNLOAD_LOCATION }}\*.zip -DestinationPath ${{ env.DESTINATION }}
         
       # - name: Deploy to IIS Server
       #   shell: powershell
