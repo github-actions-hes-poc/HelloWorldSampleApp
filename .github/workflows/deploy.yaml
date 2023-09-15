@@ -36,7 +36,6 @@ jobs:
          run: nuget restore HelloWorldSampleApp.sln
 
        - name: Build solution
-         id: dotnet-build
          run: msbuild HelloWorldSampleApp.sln /p:Configuration=Release /p:DeployOnBuild=true
 
        - name: Set AWS credentials
@@ -47,7 +46,7 @@ jobs:
            aws-region: ${{ secrets.AWS_REGION }}
            
        - name: get action id
-         run: echo "The current job id is ${{ steps.dotnet-build.outputs.jobId }}" 
+         run: echo "The current job id is $GITHUB_RUN_ID" 
         
        - name: Uploading the application artifacts to Amazon S3
          shell: cmd
