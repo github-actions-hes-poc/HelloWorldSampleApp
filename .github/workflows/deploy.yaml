@@ -17,7 +17,7 @@ env:
 jobs:
   build:
        runs-on: windows-latest
-       name: build-job
+       name: argl1995-build-job
        defaults:
          run:
            shell: cmd
@@ -49,12 +49,12 @@ jobs:
          uses: ayachensiyuan/get-action-job-id@v1.6
          env: 
            GITHUB_TOKEN: ${{ secrets.TOKEN }}
-         id: dotnet-build
+         id: dotnet-build-argl1995
          with:
           job-name: build.name
        
        - name: Get Id
-         run: echo "The current job id is ${{ steps.dotnet-build.outputs.jobId }}" 
+         run: echo "The current job id is ${{ steps.dotnet-build-argl1995.outputs.jobId }}" 
         
        - name: Uploading the application artifacts to Amazon S3
          shell: cmd
