@@ -47,9 +47,7 @@ jobs:
        - name: Get Git commit SHA
          # env:
          #   SHA_ID: $(git rev-parse --short=4 HEAD)
-         run: |
-           GITHUB_SHA=$(git rev-parse --short=4 HEAD)
-           echo "::set-output name=COMMIT_SHA::$GITHUB_SHA"
+         run: git rev-parse --short=4 HEAD
           
         
        - name: Uploading the application artifacts to Amazon S3
