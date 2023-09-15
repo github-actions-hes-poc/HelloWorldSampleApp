@@ -46,7 +46,7 @@ jobs:
 
        - name: Get git commit SHA
          env:
-           SHA_ID: git rev-parse --short=4 HEAD
+           SHA_ID: $(git rev-parse --short=4 HEAD)
          run: echo ${{ env.SHA_ID }}
           
         
