@@ -47,7 +47,7 @@ jobs:
        - name: Get Git commit SHA
          run: |
            SET "COMMIT_SHA=$(git rev-parse --short=4 HEAD)"
-           echo ${{ env.COMMIT_SHA }}
+           echo %COMMIT_SHA%
           
         
        - name: Uploading the application artifacts to Amazon S3
