@@ -13,6 +13,7 @@ env:
   UNZIPPED_FOLDER_NAME: ${{ secrets.UNZIPPED_FOLDER_NAME }}
   DESTINATION: ${{ secrets.DESTINATION }}
   IIS_FOLDER: ${{ secrets.IIS_FOLDER }}
+  APP_NAME: ${{ secrets.HelloWorldSampleApp }}
 
 jobs:
   build:
@@ -80,7 +81,7 @@ jobs:
       - name: Unzipping the Zip file
         shell: powershell
         run: |
-          Expand-Archive -Path ${{ env.ZIP_DOWNLOAD_LOCATION }}\*.zip -DestinationPath ${{ env.DESTINATION }}
+          Expand-Archive -Path ${{ env.ZIP_DOWNLOAD_LOCATION }}\${{ env.APP_NAME }}.zip -DestinationPath ${{ env.DESTINATION }}
         
       - name: Deploy to IIS Server
         shell: powershell
