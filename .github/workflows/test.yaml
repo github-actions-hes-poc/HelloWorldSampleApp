@@ -7,7 +7,7 @@ on:
   pull_request:
     branches: [ "master" ]
 env:
-  COMMIT_SHA: git rev-parse --short=4 HEAD
+  COMMIT_SHA: $(git rev-parse --short=4 HEAD)
   
 jobs:
   build:
