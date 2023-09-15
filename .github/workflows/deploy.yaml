@@ -45,10 +45,9 @@ jobs:
            aws-region: ${{ secrets.AWS_REGION }}
 
        - name: Get Git commit SHA
-         env:
-           COMMIT_SHA: ""
          run: |
-           echo "git rev-parse --short=4 HEAD: $COMMIT_SHA"
+           $env:COMMIT_SHA=$(git rev-parse --short=4 HEAD)
+           echo ${{ env.COMMIT_SHA }}
           
         
        - name: Uploading the application artifacts to Amazon S3
