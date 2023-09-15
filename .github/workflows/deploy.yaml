@@ -53,7 +53,7 @@ jobs:
          env:
            BUILD: ${{ secrets.BUILD }}
          run: |
-           echo ${{ env.name3 }}
+           echo "${{ env.name3 }}"
            C:\"Program Files"\Amazon\AWSCLIV2\aws s3 cp ${{ env.BUILD }} s3://${{ env.S3_BUCKET_NAME }}/
 
   deploy:
