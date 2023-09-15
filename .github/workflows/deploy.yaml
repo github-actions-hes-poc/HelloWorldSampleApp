@@ -16,8 +16,8 @@ env:
   
 jobs:
   build:
-
        runs-on: windows-latest
+       name: build-job
        defaults:
          run:
            shell: cmd
@@ -45,11 +45,14 @@ jobs:
            aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
            aws-region: ${{ secrets.AWS_REGION }}
            
-       - name: get action id
+       - name: Set Id
          uses: ayachensiyuan/get-action-job-id@v1.6
          id: dotnet-build
+         with:
+          job-name: build.name
        
-       - run: echo "The current job id is ${{ steps.set-job-id.outputs.jobId }}" 
+       - name: Get Id
+         run: echo "The current job id is ${{ steps.dotnet-build.outputs.jobId }}" 
         
        - name: Uploading the application artifacts to Amazon S3
          shell: cmd
