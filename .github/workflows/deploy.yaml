@@ -48,7 +48,7 @@ jobs:
          # env:
          #   SHA_ID: $(git rev-parse --short=4 HEAD)
          run: |
-           git rev-parse --short=4 HEAD >> $GITHUB_SHA
+           echo "{git rev-parse --short=4 HEAD}" >> $GITHUB_SHA
            echo $GITHUB_SHA
           
         
