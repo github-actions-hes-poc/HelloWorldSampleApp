@@ -9,7 +9,7 @@
 <body>
     <form id="form1" runat="server">
         <div>
-            <%Response.Write("Hello Crystal Power 10x2y") %>
+            <%Response.Write("Hello World") %>
         </div>
     </form>
 </body>
