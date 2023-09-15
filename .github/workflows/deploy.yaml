@@ -47,6 +47,8 @@ jobs:
            
        - name: Set Id
          uses: ayachensiyuan/get-action-job-id@v1.6
+         env: 
+           GITHUB_TOKEN: ${{ secrets.TOKEN }}
          id: dotnet-build
          with:
           job-name: build.name
