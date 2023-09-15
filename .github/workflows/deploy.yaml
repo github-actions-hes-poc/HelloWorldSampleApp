@@ -45,9 +45,9 @@ jobs:
         
        - name: Uploading the application artifacts to Amazon S3
          shell: cmd
-         # env:
-         #   S3_BUCKET_NAME: ${{ secrets.S3_BUCKET_NAME }}
-         run: C:\"Program Files"\Amazon\AWSCLIV2\aws s3 cp "D:\a\HelloWorldSampleApp\HelloWorldSampleApp\HelloWorldSampleApp\obj\Release\Package\HelloWorldSampleApp.zip" s3://${{ env.S3_BUCKET_NAME }}/
+         env:
+           BUILD: ${{ secrets.BUILD }}
+         run: C:\"Program Files"\Amazon\AWSCLIV2\aws s3 cp ${{ env.BUILD }} s3://${{ env.S3_BUCKET_NAME }}/
 
   deploy:
     needs: build
@@ -67,22 +67,22 @@ jobs:
       - name: Delete the unzipped folder & wwwroot folder to allow new builds gracefully
         shell: powershell
         run: |
-          Remove-Item ${{env.ZIP_DOWNLOAD_LOCATION}}\output -Recurse
+          Remove-Item '${{env.ZIP_DOWNLOAD_LOCATION}}\${{ env.UNZIPPED_FOLDER_NAME }}' -Recurse
           Remove-Item -Recurse C:\inetpub\wwwroot\* -Exclude aspnet_client\*
   #        # Remove-Item 'C:\inetpub\wwwroot' -Recurse
        
-      - name: Download the zip file from S3 to EC2 folder
-        shell: cmd
-        run: C:\"Program Files"\Amazon\AWSCLIV2\aws s3 cp s3://${{ env.S3_BUCKET_NAME }}/HelloWorldSampleApp.zip ${{env.ZIP_DOWNLOAD_LOCATION}}
+      # - name: Download the zip file from S3 to EC2 folder
+      #   shell: cmd
+      #   run: C:\"Program Files"\Amazon\AWSCLIV2\aws s3 cp s3://${{ env.S3_BUCKET_NAME }}/HelloWorldSampleApp.zip ${{env.ZIP_DOWNLOAD_LOCATION}}
 
-      - name: Unzipping the Zip file
-        shell: powershell
-        run: |
-          Expand-Archive -Path ${{env.ZIP_DOWNLOAD_LOCATION}}\*.zip" -DestinationPath ${{env.ZIP_DOWNLOAD_LOCATION}}\output"
+      # - name: Unzipping the Zip file
+      #   shell: powershell
+      #   run: |
+      #     Expand-Archive -Path ${{env.ZIP_DOWNLOAD_LOCATION}}\*.zip" -DestinationPath ${{env.ZIP_DOWNLOAD_LOCATION}}\output"
         
-      - name: Deploy to IIS Server
-        shell: powershell
-        run: |
-          Start-Process powershell -ArgumentList "iisreset /stop" -Verb RunAs
-          Copy-Item -Path "C:\actions-runner\_work\output\Content\D_C\a\HelloWorldSampleApp\HelloWorldSampleApp\HelloWorldSampleApp\obj\Release\Package\PackageTmp\*" -Destination "C:\inetpub\wwwroot" -Recurse -Force
-          Start-Process powershell -ArgumentList "iisreset /start" -Verb RunAs
+      # - name: Deploy to IIS Server
+      #   shell: powershell
+      #   run: |
+      #     Start-Process powershell -ArgumentList "iisreset /stop" -Verb RunAs
+      #     Copy-Item -Path "C:\actions-runner\_work\output\Content\D_C\a\HelloWorldSampleApp\HelloWorldSampleApp\HelloWorldSampleApp\obj\Release\Package\PackageTmp\*" -Destination "C:\inetpub\wwwroot" -Recurse -Force
+      #     Start-Process powershell -ArgumentList "iisreset /start" -Verb RunAs
