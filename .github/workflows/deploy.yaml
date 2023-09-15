@@ -46,7 +46,10 @@ jobs:
            aws-region: ${{ secrets.AWS_REGION }}
            
        - name: get action id
-         run: echo "The current job id is $GITHUB_RUN_ID" 
+         uses: ayachensiyuan/get-action-job-id@v1.6
+         id: dotnet-build
+       
+       - run: echo "The current job id is ${{ steps.set-job-id.outputs.jobId }}" 
         
        - name: Uploading the application artifacts to Amazon S3
          shell: cmd
