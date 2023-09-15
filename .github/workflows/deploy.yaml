@@ -40,7 +40,9 @@ jobs:
         
        - name: Uploading the application artifacts to Amazon S3
          shell: cmd
-         run: C:\"Program Files"\Amazon\AWSCLIV2\aws s3 cp "D:\a\HelloWorldSampleApp\HelloWorldSampleApp\HelloWorldSampleApp\obj\Release\Package\HelloWorldSampleApp.zip" s3://dotnet-s3-cicd-bucket/
+         env:
+           BUCKET_NAME: ${{ secrets.S3_BUCKET_NAME }}
+         run: C:\"Program Files"\Amazon\AWSCLIV2\aws s3 cp "D:\a\HelloWorldSampleApp\HelloWorldSampleApp\HelloWorldSampleApp\obj\Release\Package\HelloWorldSampleApp.zip" s3://"$BUCKET_NAME"/
 
   deploy:
      needs: build
