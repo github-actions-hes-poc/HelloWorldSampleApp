@@ -67,7 +67,7 @@ jobs:
       - name: Delete the unzipped folder & wwwroot folder to allow new builds gracefully
         shell: powershell
         run: |
-          Remove-Item ${{env.ZIP_DOWNLOAD_LOCATION}}\${{ env.UNZIPPED_FOLDER_NAME }} -Recurse
+          Remove-Item ${{env.ZIP_DOWNLOAD_LOCATION}}\output -Recurse
           Remove-Item -Recurse C:\inetpub\wwwroot\* -Exclude aspnet_client\*
   #        # Remove-Item 'C:\inetpub\wwwroot' -Recurse
        
@@ -78,7 +78,7 @@ jobs:
       - name: Unzipping the Zip file
         shell: powershell
         run: |
-          Expand-Archive -Path ${{env.ZIP_DOWNLOAD_LOCATION}}\*.zip" -DestinationPath ${{env.ZIP_DOWNLOAD_LOCATION}}\${{ env.UNZIPPED_FOLDER_NAME }}"
+          Expand-Archive -Path ${{env.ZIP_DOWNLOAD_LOCATION}}\*.zip" -DestinationPath ${{env.ZIP_DOWNLOAD_LOCATION}}\output"
         
       - name: Deploy to IIS Server
         shell: powershell
