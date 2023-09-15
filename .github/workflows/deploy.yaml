@@ -13,10 +13,7 @@ env:
   UNZIPPED_FOLDER_NAME: ${{ secrets.UNZIPPED_FOLDER_NAME }}
   DESTINATION: ${{ secrets.DESTINATION }}
   IIS_FOLDER: ${{ secrets.IIS_FOLDER }}
-  name1: "Hello"
-  name2: "World"
-  name3: $name1$name2
-
+  
 jobs:
   build:
 
@@ -52,9 +49,7 @@ jobs:
          shell: cmd
          env:
            BUILD: ${{ secrets.BUILD }}
-         run: |
-           echo "${{ env.name3 }}"
-           C:\"Program Files"\Amazon\AWSCLIV2\aws s3 cp ${{ env.BUILD }} s3://${{ env.S3_BUCKET_NAME }}/
+         run: C:\"Program Files"\Amazon\AWSCLIV2\aws s3 cp ${{ env.BUILD }} s3://${{ env.S3_BUCKET_NAME }}/
 
   deploy:
     needs: build
