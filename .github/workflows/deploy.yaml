@@ -67,7 +67,7 @@ jobs:
       - name: Delete the unzipped folder & wwwroot folder to allow new builds gracefully
         shell: powershell
         run: |
-          Remove-Item '${{env.ZIP_DOWNLOAD_LOCATION}}\${{ env.UNZIPPED_FOLDER_NAME }}' -Recurse
+          Remove-Item ${{env.ZIP_DOWNLOAD_LOCATION}}\${{ env.UNZIPPED_FOLDER_NAME }} -Recurse
           Remove-Item -Recurse C:\inetpub\wwwroot\* -Exclude aspnet_client\*
   #        # Remove-Item 'C:\inetpub\wwwroot' -Recurse
        
