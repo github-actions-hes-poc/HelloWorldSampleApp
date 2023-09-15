@@ -44,14 +44,8 @@ jobs:
            aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
            aws-region: ${{ secrets.AWS_REGION }}
 
-       - name: Set short git commit SHA
-         id: vars
-         run: |
-          calculatedSha=$(git rev-parse --short ${{ github.sha }})
-          echo "::set-output name=short_sha::$calculatedSha"
-
-       - name: Confirm git commit SHA output
-         run: echo ${{ steps.vars.outputs.short_sha }}
+       - name: Get git commit SHA
+         run: git rev-parse HEAD
         
        - name: Uploading the application artifacts to Amazon S3
          shell: cmd
