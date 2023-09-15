@@ -46,7 +46,7 @@ jobs:
 
        - name: Get Git commit SHA
          run: |
-           $env:COMMIT_SHA=$(git rev-parse --short=4 HEAD)
+           SET "COMMIT_SHA=$(git rev-parse --short=4 HEAD)"
            echo ${{ env.COMMIT_SHA }}
           
         
