@@ -13,7 +13,6 @@ env:
   UNZIPPED_FOLDER_NAME: ${{ secrets.UNZIPPED_FOLDER_NAME }}
   DESTINATION: ${{ secrets.DESTINATION }}
   IIS_FOLDER: ${{ secrets.IIS_FOLDER }}
-  SHA_ID: ""
   
 jobs:
   build:
@@ -46,9 +45,10 @@ jobs:
            aws-region: ${{ secrets.AWS_REGION }}
 
        - name: Get git commit SHA
-         run: |
-           git rev-parse --short=4 HEAD >> ${{ env.SHA_ID }}
-           echo ${{ env.SHA_ID }}
+         env:
+           SHA_ID: git rev-parse --short=4 HEAD
+         run: echo ${{ env.SHA_ID }}
+          
         
        - name: Uploading the application artifacts to Amazon S3
          shell: cmd
