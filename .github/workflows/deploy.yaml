@@ -15,7 +15,7 @@ env:
   IIS_FOLDER: ${{ secrets.IIS_FOLDER }}
   name1: "Hello"
   name2: "World"
-  name3: $name1/name2
+  name3: $name1$name2
 
 jobs:
   build:
