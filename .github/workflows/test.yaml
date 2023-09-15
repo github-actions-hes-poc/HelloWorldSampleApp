@@ -1,0 +1,21 @@
+name: "TEST"
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+env:
+  COMMIT_SHA: git rev-parse --short=4 HEAD
+  
+jobs:
+  build:
+       runs-on: windows-latest
+       defaults:
+         run:
+           shell: cmd
+
+       steps:
+       - name: GIT Commit SHA
+         run: echo ${{ env.COMMIT_SHA }}
