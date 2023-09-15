@@ -13,7 +13,7 @@ env:
   UNZIPPED_FOLDER_NAME: ${{ secrets.UNZIPPED_FOLDER_NAME }}
   DESTINATION: ${{ secrets.DESTINATION }}
   IIS_FOLDER: ${{ secrets.IIS_FOLDER }}
-  APP_NAME: ${{ secrets.HelloWorldSampleApp }}
+  APP_NAME: ${{ secrets.APP_NAME }}
 
 jobs:
   build:
