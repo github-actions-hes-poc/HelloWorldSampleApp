@@ -42,7 +42,7 @@ jobs:
          shell: cmd
          env:
            S3_BUCKET_NAME: ${{ secrets.S3_BUCKET_NAME }}
-         run: Write-Output $S3_BUCKET_NAME
+         run: ECHO $S3_BUCKET_NAME
   #        run: C:\"Program Files"\Amazon\AWSCLIV2\aws s3 cp "D:\a\HelloWorldSampleApp\HelloWorldSampleApp\HelloWorldSampleApp\obj\Release\Package\HelloWorldSampleApp.zip" s3://${}/
 
   # deploy:
