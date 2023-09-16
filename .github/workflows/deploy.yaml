@@ -46,8 +46,10 @@ jobs:
 
        - name: Get Git commit SHA
          run: |
-           git rev-parse --short=4 HEAD >> .env
-           type .env
+           # git rev-parse --short=4 HEAD >> .env
+           # type .env
+           git rev-parse --short=4 HEAD >> COMMIT_ID
+           type COMMIT_ID
       
        - name: Uploading the application artifacts to Amazon S3
          shell: cmd
