@@ -44,20 +44,16 @@ jobs:
            aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
            aws-region: ${{ secrets.AWS_REGION }}
 
-       - name: Get Git commit SHA and then upload the application artifacts to Amazon S3
-         shell: cmd
-         env:
-           BUILD: ${{ secrets.BUILD }}
+       - name: Get Git commit SHA
          run: |
            git rev-parse --short=4 HEAD >> COMMIT_ID
            type COMMIT_ID
-           C:\"Program Files"\Amazon\AWSCLIV2\aws s3 cp COMMIT_ID-${{ env.BUILD }} s3://${{ env.S3_BUCKET_NAME }}/
       
-       # - name: Uploading the application artifacts to Amazon S3
-       #   shell: cmd
-       #   env:
-       #     BUILD: ${{ secrets.BUILD }}
-       #   run: C:\"Program Files"\Amazon\AWSCLIV2\aws s3 cp COMMIT_ID-${{ env.BUILD }} s3://${{ env.S3_BUCKET_NAME }}/
+       - name: Uploading the application artifacts to Amazon S3
+         shell: cmd
+         env:
+           BUILD: ${{ secrets.BUILD }}
+         run: C:\"Program Files"\Amazon\AWSCLIV2\aws s3 cp ${COMMIT_ID}-${{ env.BUILD }} s3://${{ env.S3_BUCKET_NAME }}/
 
   # deploy:
   #   needs: buil$d
