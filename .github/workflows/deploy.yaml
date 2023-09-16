@@ -76,8 +76,8 @@ jobs:
        - name: Download the zip file from S3 to EC2 folder
          shell: bash
          run: |
-           $latest_folder=aws s3 ls dotnet-s3-cicd-bucket --recursive | sort | tail -n 1 | awk '{print $4}'
-           aws s3 cp s3://${{ env.S3_BUCKET_NAME }}/$latest_folder ${{ env.ZIP_DOWNLOAD_LOCATION }}
+           C:\Program Files\Git\bin $latest_folder=aws s3 ls dotnet-s3-cicd-bucket --recursive | sort | tail -n 1 | awk '{print $4}'
+           C:\Program Files\Git\bin aws s3 cp s3://${{ env.S3_BUCKET_NAME }}/$latest_folder ${{ env.ZIP_DOWNLOAD_LOCATION }}
 
        # - name: Unzipping the Zip file
        #   shell: powershell
