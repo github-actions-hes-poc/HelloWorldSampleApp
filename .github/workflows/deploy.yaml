@@ -46,13 +46,14 @@ jobs:
 
        - name: Get Git commit SHA
          run: |
-           set COMMIT_ID=git rev-parse --short=4 HEAD          
+           set COMMIT_ID=%git rev-parse --short=4 HEAD%   
+           echo %COMMIT_ID%
 
-       - name: create a .env file
-         run: |
-           echo >> .env
-           echo $COMMIT_ID >> .env
-           type .env
+       # - name: create a .env file
+       #   run: |
+       #     echo >> .env
+       #     echo $COMMIT_ID >> .env
+       #     type .env
   
        - name: Uploading the application artifacts to Amazon S3
          shell: cmd
