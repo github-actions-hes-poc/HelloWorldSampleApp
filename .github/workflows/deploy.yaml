@@ -45,6 +45,7 @@ jobs:
            aws-region: ${{ secrets.AWS_REGION }}
 
        - name: Get Git commit SHA
+         shell: bash
          run: |
            git rev-parse --short=4 HEAD > COMMIT_ID
            set commit_id=$(type COMMIT_ID)
