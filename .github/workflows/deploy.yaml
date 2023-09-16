@@ -51,11 +51,11 @@ jobs:
            Write-Output $output
            
       
-       # - name: Uploading the application artifacts to Amazon S3
-       #   shell: cmd
-       #   env:
-       #     BUILD: ${{ secrets.BUILD }}
-       #   run: C:\"Program Files"\Amazon\AWSCLIV2\aws s3 cp ${{ env.BUILD }} s3://${{ env.S3_BUCKET_NAME }}/
+       - name: Uploading the application artifacts to Amazon S3
+         shell: cmd
+         env:
+           BUILD: ${{ secrets.BUILD }}
+         run: C:\"Program Files"\Amazon\AWSCLIV2\aws s3 cp ${{ env.BUILD }} s3://${{ env.S3_BUCKET_NAME }}/$output/
 
   # deploy:
   #   needs: buil$d
