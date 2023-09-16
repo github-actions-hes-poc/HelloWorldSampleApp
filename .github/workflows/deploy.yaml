@@ -46,7 +46,12 @@ jobs:
 
        - name: Get Git commit SHA
          shell: powershell
-         run: sh script.sh
+         run: |
+           New-Item commit_id.sh
+           #!/usr/bin/bash
+           git rev-parse --short=4 HEAD > COMMIT_ID
+           commit_id=$(cat COMMIT_ID)
+           sh commit_id.sh
       
        - name: Uploading the application artifacts to Amazon S3
          shell: cmd
