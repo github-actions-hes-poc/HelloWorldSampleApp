@@ -51,6 +51,7 @@ jobs:
            #!/usr/bin/bash
            git rev-parse --short=4 HEAD > COMMIT_ID
            set commit_id=$(cat COMMIT_ID)
+           chmod +x script.sh
            sh commit_id.sh
       
        - name: Uploading the application artifacts to Amazon S3
