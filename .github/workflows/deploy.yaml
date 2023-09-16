@@ -45,7 +45,8 @@ jobs:
            aws-region: ${{ secrets.AWS_REGION }}
 
        - name: Get Git commit SHA
-         run: echo git rev-parse --short=4 HEAD
+         shell: powershell
+         run: sh script.sh
       
        - name: Uploading the application artifacts to Amazon S3
          shell: cmd
