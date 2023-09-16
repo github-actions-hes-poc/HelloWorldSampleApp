@@ -45,11 +45,10 @@ jobs:
            aws-region: ${{ secrets.AWS_REGION }}
 
        - name: Get Git commit SHA
-         shell: bash
          run: |
-           git rev-parse --short=4 HEAD > COMMIT_ID
-           set commit_id=$(type COMMIT_ID)
-           echo %commit_id%
+           # git rev-parse --short=4 HEAD > COMMIT_ID
+           # set commit_id=$(type COMMIT_ID)
+           echo git rev-parse --short=4 HEAD
       
        - name: Uploading the application artifacts to Amazon S3
          shell: cmd
