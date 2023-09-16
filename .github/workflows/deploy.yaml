@@ -48,12 +48,13 @@ jobs:
          run: |
            git rev-parse --short=4 HEAD > COMMIT_ID
            set commit_id=$(type COMMIT_ID)
+           echo %commit_id%
       
        - name: Uploading the application artifacts to Amazon S3
          shell: cmd
          env:
            BUILD: ${{ secrets.BUILD }}
-         run: C:\"Program Files"\Amazon\AWSCLIV2\aws s3 cp ${{ env.BUILD }} s3://${{ env.S3_BUCKET_NAME }}/%commit_id%/
+         run: C:\"Program Files"\Amazon\AWSCLIV2\aws s3 cp ${{ env.BUILD }} s3://${{ env.S3_BUCKET_NAME }}/
 
   # deploy:
   #   needs: buil$d
