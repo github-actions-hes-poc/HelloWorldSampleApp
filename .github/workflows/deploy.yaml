@@ -48,7 +48,7 @@ jobs:
          run: |
            git rev-parse --short=4 HEAD >> COMMIT_ID
            type COMMIT_ID
-           type name-$COMMIT_ID
+           echo git-$COMMIT_ID
       
        - name: Uploading the application artifacts to Amazon S3
          shell: cmd
