@@ -46,10 +46,8 @@ jobs:
 
        - name: Get Git commit SHA
          run: |
-           SET "COMMIT_SHA=$(git rev-parse --short=4 HEAD)"
-           echo %COMMIT_SHA%
-          
-        
+           git rev-parse --short=4 HEAD          
+  
        - name: Uploading the application artifacts to Amazon S3
          shell: cmd
          env:
