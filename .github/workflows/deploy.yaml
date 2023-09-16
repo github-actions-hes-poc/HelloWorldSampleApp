@@ -47,6 +47,11 @@ jobs:
        - name: Get Git commit SHA
          run: |
            git rev-parse --short=4 HEAD          
+
+       - name: create a .env file
+         run: |
+           echo >> .env
+           Get-Content .env
   
        - name: Uploading the application artifacts to Amazon S3
          shell: cmd
