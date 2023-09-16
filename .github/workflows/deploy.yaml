@@ -67,15 +67,15 @@ jobs:
            aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
            aws-region: ${{ secrets.AWS_REGION }}
      
-       - name: Delete the unzipped folder & wwwroot folder to allow new builds gracefully
-         shell: powershell
-         run: |
-           Remove-Item ${{ env.DESTINATION }} -Recurse
-           Remove-Item -Recurse ${{ env.IIS_FOLDER }}\* 
+       # - name: Delete the unzipped folder & wwwroot folder to allow new builds gracefully
+       #   shell: powershell
+       #   run: |
+       #     Remove-Item ${{ env.DESTINATION }} -Recurse
+       #     Remove-Item -Recurse ${{ env.IIS_FOLDER }}\* 
        
        - name: Download the zip file from S3 to EC2 folder
          shell: powershell
-         run: aws s3 cp s3://${{ env.S3_BUCKET_NAME }}/$output/HelloWorldSampleApp.zip ${{ env.ZIP_DOWNLOAD_LOCATION }}
+         run: aws s3 cp s3://${{ env.S3_BUCKET_NAME }}/$output/* ${{ env.ZIP_DOWNLOAD_LOCATION }}
 
        - name: Unzipping the Zip file
          shell: powershell
