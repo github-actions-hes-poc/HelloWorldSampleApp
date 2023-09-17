@@ -50,7 +50,8 @@ jobs:
             BUILD: ${{ secrets.BUILD }}
           run: |
             $output = git rev-parse --short=4 HEAD
-            aws s3 cp ${{ env.BUILD }} s3://${{ env.S3_BUCKET_NAME }}/$output/
+            $currentTime = Get-Date -Format "yyyyMMddHHmmss"
+            aws s3 cp ${{ env.BUILD }} s3://${{ env.S3_BUCKET_NAME }}/$currentTime/$output/
             aws s3 cp ${{ env.BUILD }} s3://${{ env.S3_BUCKET_NAME }}/
             
 
@@ -82,7 +83,7 @@ jobs:
        - name: Unzipping the Zip file
          shell: powershell
          run: |
-           Expand-Archive -Path ${{ env.ZIP_DOWNLOAD_LOCATION }}\$latest_folder -DestinationPath ${{ env.DESTINATION }}
+           Expand-Archive -Path ${{ env.ZIP_DOWNLOAD_LOCATION }}\HelloWorldSampleApp.zip -DestinationPath ${{ env.DESTINATION }}
         
        - name: Deploy to IIS Server
          shell: powershell
