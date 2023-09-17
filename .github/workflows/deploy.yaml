@@ -77,8 +77,7 @@ jobs:
          shell: powershell
          run: |
            $latest_folder = aws s3 ls ${{ env.S3_BUCKET_NAME }} --recursive | Sort-Object LastWriteTime | Select-Object -Last 1
-         env:
-           folder: echo "$latest_folder"
+           echo $latest_folder
            
        # - name: Unzipping the Zip file
        #   shell: powershell
