@@ -80,7 +80,7 @@ jobs:
            $string = $latest_folder
            $columns = $string.Split(' ')
            $lastColumn = $columns[-1]
-           C:\"Program Files"\Amazon\AWSCLIV2\aws s3 cp s3://${{ env.S3_BUCKET_NAME }}/$lastColumn ${{ env.ZIP_DOWNLOAD_LOCATION }} --recursive
+           C:\"Program Files"\Amazon\AWSCLIV2\aws s3 cp s3://${{ env.S3_BUCKET_NAME }}/$lastColumn/ ${{ env.ZIP_DOWNLOAD_LOCATION }} --recursive
            
        # - name: Unzipping the Zip file
        #   shell: powershell
