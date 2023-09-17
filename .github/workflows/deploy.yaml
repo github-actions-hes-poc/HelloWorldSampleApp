@@ -76,8 +76,7 @@ jobs:
        - name: Download the zip file from S3 to EC2 folder
          shell: powershell
          run: |
-           $latest_folder = aws s3 ls ${{ env.S3_BUCKET_NAME }} --recursive | Sort-Object LastWriteTime | Select-Object -Last 1
-           echo $latest_folder | Sort-Object LastWriteTime | Select-Object -Last 1
+           $latest_folder = echo "aws s3 ls ${{ env.S3_BUCKET_NAME }} --recursive | Sort-Object LastWriteTime | Select-Object -Last 1"
            
        # - name: Unzipping the Zip file
        #   shell: powershell
