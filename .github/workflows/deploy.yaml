@@ -79,16 +79,16 @@ jobs:
          shell: powershell
          run: C:\"Program Files"\Amazon\AWSCLIV2\aws s3 cp s3://${{ env.S3_BUCKET_NAME }}/HelloWorldSampleApp.zip ${{ env.ZIP_DOWNLOAD_LOCATION }}
          
-       # - name: Unzipping the Zip file
-       #   shell: powershell
-       #   run: |
-       #     Expand-Archive -Path ${{ env.ZIP_DOWNLOAD_LOCATION }}\$latest_folder -DestinationPath ${{ env.DESTINATION }}
+       - name: Unzipping the Zip file
+         shell: powershell
+         run: |
+           Expand-Archive -Path ${{ env.ZIP_DOWNLOAD_LOCATION }}\$latest_folder -DestinationPath ${{ env.DESTINATION }}
         
-       # - name: Deploy to IIS Server
-       #   shell: powershell
-       #   env:
-       #     COPY_LOCATION: ${{ secrets.COPY_LOCATION }}
-       #   run: |
-       #     Start-Process powershell -ArgumentList "iisreset /stop" -Verb RunAs
-       #     Copy-Item -Path ${{ env.COPY_LOCATION }}\* -Destination ${{ env.IIS_FOLDER }} -Recurse -Force
-       #     Start-Process powershell -ArgumentList "iisreset /start" -Verb RunAs
+       - name: Deploy to IIS Server
+         shell: powershell
+         env:
+           COPY_LOCATION: ${{ secrets.COPY_LOCATION }}
+         run: |
+           Start-Process powershell -ArgumentList "iisreset /stop" -Verb RunAs
+           Copy-Item -Path ${{ env.COPY_LOCATION }}\* -Destination ${{ env.IIS_FOLDER }} -Recurse -Force
+           Start-Process powershell -ArgumentList "iisreset /start" -Verb RunAs
