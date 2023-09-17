@@ -77,7 +77,7 @@ jobs:
          shell: powershell
          run: |
            $latest_folder = aws s3 ls ${{ env.S3_BUCKET_NAME }} --recursive | Sort-Object LastWriteTime | Select-Object -Last 1
-           C:\"Program Files"\Amazon\AWSCLIV2\aws s3 sync s3://${{ env.S3_BUCKET_NAME }}/$$value ${{ env.ZIP_DOWNLOAD_LOCATION }} --debug
+           C:\"Program Files"\Amazon\AWSCLIV2\aws s3 sync s3://${{ env.S3_BUCKET_NAME }}/$(value) ${{ env.ZIP_DOWNLOAD_LOCATION }}
 
        # - name: Unzipping the Zip file
        #   shell: powershell
