@@ -77,7 +77,10 @@ jobs:
          shell: powershell
          run: |
            $latest_folder = aws s3 ls ${{ env.S3_BUCKET_NAME }} --recursive | Sort-Object LastWriteTime | Select-Object -Last 1
-           echo $latest_folder | awk '{print $4}'
+           $string = $latest_folder
+           $columns = $string.Split(' ')
+           $lastColumn = $columns[-1]
+           Write-Output $lastColumn
            
        # - name: Unzipping the Zip file
        #   shell: powershell
