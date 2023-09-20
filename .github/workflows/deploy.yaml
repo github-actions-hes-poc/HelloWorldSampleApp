@@ -57,8 +57,11 @@ jobs:
               echo "Executing git rev-parse"
               $output = git rev-parse --short=4 HEAD
               echo "Output: $output"
-              echo "::set-output name=my_output::$output"
-            
+          - name: Save state
+            run: |
+              echo "git-sha=$output" >> $GITHUB_STATE
+              echo $GITHUB_STATE
+
 
     # deploy:
     #   needs: build
