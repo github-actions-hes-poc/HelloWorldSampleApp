@@ -50,12 +50,12 @@ jobs:
          #     BUILD: ${{ secrets.BUILD }}
          #   run: aws s3 cp ${{ env.BUILD }} s3://${{ env.S3_BUCKET_NAME }}/
 
-         - name: Generate 4-digits for Git Commit SHA
-           shell: powershell
-           id: git-commit-sha
-           run: |
-             $output = git rev-parse --short=4 HEAD
-             echo "::set-output name=my_output::$output"
+          - name: Generate 4-digits for Git Commit SHA
+            shell: powershell
+            id: git-commit-sha
+            run: |
+              $output = git rev-parse --short=4 HEAD
+              echo "::set-output name=my_output::$output"
             
 
     deploy:
