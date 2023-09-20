@@ -49,9 +49,9 @@ jobs:
           env:
             BUILD: ${{ secrets.BUILD }}
           run: |
-            $output = git rev-parse --short=4 HEAD
-            $currentTime = Get-Date -Format "yyyyMMddHHmmss"
-            aws s3 cp ${{ env.BUILD }} s3://${{ env.S3_BUCKET_NAME }}/$currentTime/$output/
+            # $output = git rev-parse --short=4 HEAD
+            # $currentTime = Get-Date -Format "yyyyMMddHHmmss"
+            # aws s3 cp ${{ env.BUILD }} s3://${{ env.S3_BUCKET_NAME }}/$currentTime/$output/
             aws s3 cp ${{ env.BUILD }} s3://${{ env.S3_BUCKET_NAME }}/
             
 
@@ -69,12 +69,6 @@ jobs:
            aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY }}
            aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
            aws-region: ${{ secrets.AWS_REGION }}
-     
-       - name: Delete the unzipped folder & wwwroot folder to allow new builds gracefully
-         shell: powershell
-         run: |
-           Remove-Item ${{ env.DESTINATION }} -Recurse
-           Remove-Item -Recurse ${{ env.IIS_FOLDER }}\* 
            
        - name: Download the zip file from S3 to EC2 folder
          shell: powershell
@@ -91,5 +85,13 @@ jobs:
            COPY_LOCATION: ${{ secrets.COPY_LOCATION }}
          run: |
            Start-Process powershell -ArgumentList "iisreset /stop" -Verb RunAs
+           Remove-Item ${{ env.IIS_FOLDER }}\*  -Recurse
            Copy-Item -Path ${{ env.COPY_LOCATION }}\* -Destination ${{ env.IIS_FOLDER }} -Recurse -Force
            Start-Process powershell -ArgumentList "iisreset /start" -Verb RunAs
+
+       - name: Delete the unzipped output folder & zipped file to allow new builds gracefully
+         shell: powershell
+         run: |
+           Remove-Item ${{ env.DESTINATION }} -Recurse
+           Remove-Item C:\actions-runner\_work\HelloWorldSampleApp.zip
+          
