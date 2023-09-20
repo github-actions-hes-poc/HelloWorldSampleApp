@@ -101,6 +101,7 @@ jobs:
         #     Remove-Item C:\actions-runner\_work\HelloWorldSampleApp.zip
 
          - name: Use Git Commit SHA
+           shell: powershell
            run: |
              git_commit_sha=$(echo "${{ steps.git-commit-sha.outputs.my_output }}")
              echo "Git Commit SHA is $git_commit_sha"
