@@ -57,20 +57,17 @@ jobs:
               echo "Executing git rev-parse"
               $output = git rev-parse --short=4 HEAD
               echo "Output: $output"
-          - name: Save state
-            run: |
-              echo "git-sha=$output" >> $GITHUB_STATE
-              echo $GITHUB_STATE
+              echo "::set-output name=my_output::$output"
 
 
-    # deploy:
-    #   needs: build
-    #   runs-on: [ self-hosted, Windows, X64 ]
-    #   defaults:
-    #     run:
-    #       shell: cmd
+    deploy:
+       needs: build
+       runs-on: [ self-hosted, Windows, X64 ]
+       defaults:
+         run:
+           shell: cmd
     
-    #   steps:
+       steps:
         # - name: Set AWS credentials
         #   uses: aws-actions/configure-aws-credentials@v1
         #   with:
@@ -103,8 +100,7 @@ jobs:
         #     Remove-Item ${{ env.DESTINATION }} -Recurse
         #     Remove-Item C:\actions-runner\_work\HelloWorldSampleApp.zip
 
-        # - name: Get Commit SHA
-        #   shell: powershell
-        #   run: |
-        #     $git_sha = ${{ steps.git-commit-sha.outputs.my_output }}
-        #     echo $git_sha
+         - name: Use Git Commit SHA
+           run: |
+             git_commit_sha=$(echo "${{ steps.git-commit-sha.outputs.my_output }}")
+             echo "Git Commit SHA is $git_commit_sha"
