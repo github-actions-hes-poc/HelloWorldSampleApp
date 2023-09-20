@@ -93,5 +93,5 @@ jobs:
 
        - name: Rename the zip file stored in S3 bucket
          shell: powershell
-         run: C:\Program Files\Git\cmd\git --version
+         run: C:\"Program Files"\Git\cmd\git --version
           
