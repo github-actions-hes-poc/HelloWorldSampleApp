@@ -53,12 +53,10 @@ jobs:
             - name: Set Commit SHA
               id: set_commit_sha
               shell: powershell
-              env:
-                BUILD: ${{ secrets.BUILD }}
               run: |
                 $output = git rev-parse --short=4 HEAD
                 echo $output > commit_sha.txt
-                aws s3 cp ${{ env.BUILD }} s3://${{ env.S3_BUCKET_NAME }}/web-app/commit_sha.txt
+                aws s3 cp commit_sha.txt s3://${{ env.S3_BUCKET_NAME }}/web-app/
                 
             # - name: Print Commit SHA
             #   run: |
