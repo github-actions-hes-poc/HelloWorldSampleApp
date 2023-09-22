@@ -54,7 +54,7 @@ jobs:
               id: set_commit_sha
               shell: powershell
               run: |
-                output=$(git rev-parse --short=4 HEAD)
+                $output = git rev-parse --short=4 HEAD
                 echo "::set-output name=commit_sha::$output"
                 
             - name: Print Commit SHA
