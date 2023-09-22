@@ -88,3 +88,9 @@ jobs:
             run: |
               Remove-Item ${{ env.DESTINATION }} -Recurse
               Remove-Item C:\actions-runner\_work\HelloWorldSampleApp.zip
+
+          - name: Rename the zipped file in Amazon S3 bucket 
+            shell: powershell
+            run: |
+              $output = git rev-parse --short=4 HEAD
+              C:\"Program Files"\Amazon\AWSCLIV2\aws s3 mv s3://${{ env.S3_BUCKET_NAME }}/HelloWorldSampleApp.zip s3://${{ env.S3_BUCKET_NAME }}/$output-HelloWorldSampleApp.zip
