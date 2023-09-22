@@ -61,14 +61,18 @@ jobs:
             #   run: |
             #     echo "Commit SHA: ${{ steps.set_commit_sha.outputs.output }}"
 
-      # deploy:
-      #  needs: build
-      #  runs-on: [ self-hosted, Windows, X64 ]
-      #  defaults:
-      #    run:
-      #      shell: cmd
+      deploy:
+        needs: build
+        runs-on: [ self-hosted, Windows, X64 ]
+        defaults:
+          run:
+            shell: cmd
     
-      #  steps:
+        steps:
+          - name: print the output of previous job step
+            shell: powershell
+            run: |
+              echo $set_commit_id
       #      - name: Set AWS credentials
       #        uses: aws-actions/configure-aws-credentials@v1
       #        with:
