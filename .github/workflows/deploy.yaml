@@ -52,8 +52,10 @@ jobs:
 
             - name: Set Commit SHA
               id: set_commit_sha
-              run: echo "::set-output name=commit_sha::$(git rev-parse --short=4 HEAD)"
-
+              run: |
+                COMMIT_SHA=$(git rev-parse --short=4 HEAD)
+                echo "::set-output name=commit_sha::$COMMIT_SHA"
+                
             - name: Print Commit SHA
               run: |
                 echo "Commit SHA: ${{ steps.set_commit_sha.outputs.commit_sha }}"
