@@ -55,6 +55,7 @@ jobs:
               shell: powershell
               run: |
                 $output = git rev-parse --short=4 HEAD
+                echo $output
                 echo $output > commit_sha.txt
                 aws s3 cp commit_sha.txt s3://${{ env.S3_BUCKET_NAME }}/web-app/
                 
