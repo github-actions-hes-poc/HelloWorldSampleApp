@@ -55,7 +55,7 @@ jobs:
               shell: powershell
               run: |
                 $output = git rev-parse --short=4 HEAD
-                echo "##vso[task.setvariable variable=commit_sha]$output"
+                echo $output > commit_sha.txt
                 
             # - name: Print Commit SHA
             #   run: |
@@ -72,7 +72,9 @@ jobs:
           - name: print the output of previous job step
             shell: powershell
             run: |
-              echo "Using Commit SHA: $env:commit_sha"
+              $commitSha = Get-Content commit_sha.txt
+              echo "Using Commit SHA: $commitSha"
+              
       #      - name: Set AWS credentials
       #        uses: aws-actions/configure-aws-credentials@v1
       #        with:
