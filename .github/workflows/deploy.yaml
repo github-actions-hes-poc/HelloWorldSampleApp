@@ -15,83 +15,82 @@ env:
   IIS_FOLDER: ${{ secrets.IIS_FOLDER }}
   
 jobs:
-     # build:
-     #      runs-on: windows-latest
-     #      defaults:
-     #        run:
-     #          shell: cmd
+      build:
+           runs-on: windows-latest
+           defaults:
+             run:
+               shell: cmd
 
-     #      steps:
-     #       - name: Checkout code repository
-     #         uses: actions/checkout@v3
+           steps:
+            - name: Checkout code repository
+              uses: actions/checkout@v3
       
-     #       - name: Setup MSBuild
-     #         uses: microsoft/setup-msbuild@v1
+            - name: Setup MSBuild
+              uses: microsoft/setup-msbuild@v1
 
-     #       - name: Setup NuGet
-     #         uses: NuGet/setup-nuget@v1.0.5
+            - name: Setup NuGet
+              uses: NuGet/setup-nuget@v1.0.5
 
-     #       - name: Restore Packages
-     #         run: nuget restore HelloWorldSampleApp.sln
+            - name: Restore Packages
+              run: nuget restore HelloWorldSampleApp.sln
 
-     #       - name: Build solution
-     #         run: msbuild HelloWorldSampleApp.sln /p:Configuration=Release /p:DeployOnBuild=true
+            - name: Build solution
+              run: msbuild HelloWorldSampleApp.sln /p:Configuration=Release /p:DeployOnBuild=true
 
-     #       - name: Set AWS credentials
-     #         uses: aws-actions/configure-aws-credentials@v1
-     #         with:
-     #           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY }}
-     #           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-     #           aws-region: ${{ secrets.AWS_REGION }}
+            - name: Set AWS credentials
+              uses: aws-actions/configure-aws-credentials@v1
+              with:
+                aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY }}
+                aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+                aws-region: ${{ secrets.AWS_REGION }}
 
-     #       - name: Upload artifacts to Amazon S3
-     #         shell: powershell
-     #         env:
-     #           BUILD: ${{ secrets.BUILD }}
-     #         run: aws s3 cp ${{ env.BUILD }} s3://${{ env.S3_BUCKET_NAME }}/
+            - name: Upload artifacts to Amazon S3
+              shell: powershell
+              env:
+                BUILD: ${{ secrets.BUILD }}
+              run: aws s3 cp ${{ env.BUILD }} s3://${{ env.S3_BUCKET_NAME }}/
 
-     deploy:
-       # needs: build
+      deploy:
+       needs: build
        runs-on: [ self-hosted, Windows, X64 ]
        defaults:
          run:
            shell: cmd
     
        steps:
-          # - name: Set AWS credentials
-          #   uses: aws-actions/configure-aws-credentials@v1
-          #   with:
-          #     aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY }}
-          #     aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          #     aws-region: ${{ secrets.AWS_REGION }}
+           - name: Set AWS credentials
+             uses: aws-actions/configure-aws-credentials@v1
+             with:
+               aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY }}
+               aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+               aws-region: ${{ secrets.AWS_REGION }}
            
-          # - name: Download the zip file from S3 to EC2 folder
-          #   shell: powershell
-          #   run: C:\"Program Files"\Amazon\AWSCLIV2\aws s3 cp s3://${{ env.S3_BUCKET_NAME }}/HelloWorldSampleApp.zip ${{ env.ZIP_DOWNLOAD_LOCATION }}
+           - name: Download the zip file from S3 to EC2 folder
+             shell: powershell
+             run: C:\"Program Files"\Amazon\AWSCLIV2\aws s3 cp s3://${{ env.S3_BUCKET_NAME }}/HelloWorldSampleApp.zip ${{ env.ZIP_DOWNLOAD_LOCATION }}
          
-          # - name: Unzipping the Zip file
-          #   shell: powershell
-          #   run: Expand-Archive -Path ${{ env.ZIP_DOWNLOAD_LOCATION }}\HelloWorldSampleApp.zip -DestinationPath ${{ env.DESTINATION }}
+           - name: Unzipping the Zip file
+             shell: powershell
+             run: Expand-Archive -Path ${{ env.ZIP_DOWNLOAD_LOCATION }}\HelloWorldSampleApp.zip -DestinationPath ${{ env.DESTINATION }}
         
-          # - name: Deploy to IIS Server
-          #   shell: powershell
-          #   env:
-          #     COPY_LOCATION: ${{ secrets.COPY_LOCATION }}
-          #   run: |
-          #     Start-Process powershell -ArgumentList "iisreset /stop" -Verb RunAs
-          #     Remove-Item ${{ env.IIS_FOLDER }}\*  -Recurse
-          #     Copy-Item -Path ${{ env.COPY_LOCATION }}\* -Destination ${{ env.IIS_FOLDER }} -Recurse -Force
-          #     Start-Process powershell -ArgumentList "iisreset /start" -Verb RunAs
+           - name: Deploy to IIS Server
+             shell: powershell
+             env:
+               COPY_LOCATION: ${{ secrets.COPY_LOCATION }}
+             run: |
+               Start-Process powershell -ArgumentList "iisreset /stop" -Verb RunAs
+               Remove-Item ${{ env.IIS_FOLDER }}\*  -Recurse
+               Copy-Item -Path ${{ env.COPY_LOCATION }}\* -Destination ${{ env.IIS_FOLDER }} -Recurse -Force
+               Start-Process powershell -ArgumentList "iisreset /start" -Verb RunAs
 
-          # - name: Delete the unzipped output folder & zipped file to allow new builds gracefully
-          #   shell: powershell
-          #   run: |
-          #     Remove-Item ${{ env.DESTINATION }} -Recurse
-          #     Remove-Item C:\actions-runner\_work\HelloWorldSampleApp.zip
+           - name: Delete the unzipped output folder & zipped file to allow new builds gracefully
+             shell: powershell
+             run: |
+               Remove-Item ${{ env.DESTINATION }} -Recurse
+               Remove-Item C:\actions-runner\_work\HelloWorldSampleApp.zip
 
-          - name: Rename the zipped file in Amazon S3 bucket 
-            shell: powershell
-            run: |
-              $output = git rev-parse --short=4 HEAD
-              echo $output
-              # C:\"Program Files"\Amazon\AWSCLIV2\aws s3 mv s3://${{ env.S3_BUCKET_NAME }}/HelloWorldSampleApp.zip s3://${{ env.S3_BUCKET_NAME }}/$commit-sha-HelloWorldSampleApp.zip
+           - name: Rename the zipped file in Amazon S3 bucket 
+             shell: powershell
+             run: |
+               $output = git rev-parse --short=4 HEAD
+                echo $output
