@@ -72,6 +72,7 @@ jobs:
           - name: print the output of previous job step
             shell: powershell
             run: |
+              Start-Process powershell New-Item C:\actions-runner\_work\HelloWorldSampleApp\HelloWorldSampleApp\commit_sha.txt
               $commitSha = Get-Content commit_sha.txt
               echo "Using Commit SHA: $commitSha"
               
