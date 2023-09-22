@@ -82,8 +82,8 @@ jobs:
               shell: powershell
               run: |
                 C:\"Program Files"\Amazon\AWSCLIV2\aws s3 cp s3://dotnet-cicd-bucket-demo/web-app/commit_sha.txt C:\actions-runner\_work
-                $output = cat commit_sha.txt
-                echo $output
+                # $output = cat commit_sha.txt
+                # echo $output
       #        run: C:\"Program Files"\Amazon\AWSCLIV2\aws s3 cp s3://${{ env.S3_BUCKET_NAME }}/web-app/HelloWorldSampleApp.zip ${{ env.ZIP_DOWNLOAD_LOCATION }}
          
       #      - name: Unzipping the Zip file
