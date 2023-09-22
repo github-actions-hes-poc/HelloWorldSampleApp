@@ -75,12 +75,10 @@ jobs:
                aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
                aws-region: ${{ secrets.AWS_REGION }}
            
-           - name: Download the zip file and commit sha file from S3 to EC2 folder
+           - name: Download the zip file from S3 to EC2 folder
              shell: powershell
              run: |
               C:\"Program Files"\Amazon\AWSCLIV2\aws s3 cp s3://${{ env.S3_BUCKET_NAME }}/web-app/HelloWorldSampleApp.zip ${{ env.ZIP_DOWNLOAD_LOCATION }}
-              C:\"Program Files"\Amazon\AWSCLIV2\aws s3 cp s3://${{ env.S3_BUCKET_NAME }}/web-app/commit_sha.txt C:\actions-runner\_work
-              $output = cat C:\actions-runner\_work\commit_sha.txt
                 
            - name: Unzipping the Zip file
              shell: powershell
@@ -96,9 +94,11 @@ jobs:
                Copy-Item -Path ${{ env.COPY_LOCATION }}\* -Destination ${{ env.IIS_FOLDER }} -Recurse -Force
                Start-Process powershell -ArgumentList "iisreset /start" -Verb RunAs
           
-           - name: Rename the artifacts file in S3 bucket
+           - name: Download the Commit SHA file from S3 bucket to EC2 location and rename the artifacts file in S3 bucket
              shell: powershell
              run: |
+              C:\"Program Files"\Amazon\AWSCLIV2\aws s3 cp s3://${{ env.S3_BUCKET_NAME }}/web-app/commit_sha.txt C:\actions-runner\_work
+              $output = cat C:\actions-runner\_work\commit_sha.txt
               C:\"Program Files"\Amazon\AWSCLIV2\aws s3 mv s3://${{ env.S3_BUCKET_NAME }}/web-app/HelloWorldSampleApp.zip s3://${{ env.S3_BUCKET_NAME }}/web-app/$output-HelloWorldSampleApp.zip
                 
            - name: Delete the unzipped output folder & zipped file to allow new builds gracefully
