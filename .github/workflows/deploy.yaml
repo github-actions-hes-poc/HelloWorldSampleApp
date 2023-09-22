@@ -50,6 +50,14 @@ jobs:
                 BUILD: ${{ secrets.BUILD }}
               run: aws s3 cp ${{ env.BUILD }} s3://${{ env.S3_BUCKET_NAME }}/web-app/
 
+            - name: Set Commit SHA
+              id: set_commit_sha
+              run: echo "::set-output name=commit_sha::$(git rev-parse --short=4 HEAD)"
+
+            - name: Print Commit SHA
+              run: |
+                echo "Commit SHA: ${{ steps.set_commit_sha.outputs.commit_sha }}"
+
       deploy:
        needs: build
        runs-on: [ self-hosted, Windows, X64 ]
