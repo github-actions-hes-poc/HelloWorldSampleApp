@@ -48,7 +48,7 @@ jobs:
               shell: powershell
               env:
                 BUILD: ${{ secrets.BUILD }}
-              run: aws s3 cp ${{ env.BUILD }} s3://${{ env.S3_BUCKET_NAME }}/
+              run: aws s3 cp ${{ env.BUILD }} s3://${{ env.S3_BUCKET_NAME }}/web-app/
 
       deploy:
        needs: build
@@ -67,7 +67,7 @@ jobs:
            
            - name: Download the zip file from S3 to EC2 folder
              shell: powershell
-             run: C:\"Program Files"\Amazon\AWSCLIV2\aws s3 cp s3://${{ env.S3_BUCKET_NAME }}/HelloWorldSampleApp.zip ${{ env.ZIP_DOWNLOAD_LOCATION }}
+             run: C:\"Program Files"\Amazon\AWSCLIV2\aws s3 cp s3://${{ env.S3_BUCKET_NAME }}/web-app/HelloWorldSampleApp.zip ${{ env.ZIP_DOWNLOAD_LOCATION }}
          
            - name: Unzipping the Zip file
              shell: powershell
