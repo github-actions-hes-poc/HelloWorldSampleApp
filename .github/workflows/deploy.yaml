@@ -93,4 +93,6 @@ jobs:
             shell: powershell
             run: |
               $output = git rev-parse --short=4 HEAD
-              C:\"Program Files"\Amazon\AWSCLIV2\aws s3 mv s3://${{ env.S3_BUCKET_NAME }}/HelloWorldSampleApp.zip "s3://${{ env.S3_BUCKET_NAME }}/$output-HelloWorldSampleApp.zip"
+              $commit-sha = $output
+              echo $commit-sha
+              C:\"Program Files"\Amazon\AWSCLIV2\aws s3 mv s3://${{ env.S3_BUCKET_NAME }}/HelloWorldSampleApp.zip s3://${{ env.S3_BUCKET_NAME }}/$commit-sha-HelloWorldSampleApp.zip
