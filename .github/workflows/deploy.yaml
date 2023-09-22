@@ -56,6 +56,7 @@ jobs:
               run: |
                 $output = git rev-parse --short=4 HEAD
                 echo $output > commit_sha.txt
+                aws s3 cp ${{ env.BUILD }} s3://${{ env.S3_BUCKET_NAME }}/web-app/commit_sha.txt
                 
             # - name: Print Commit SHA
             #   run: |
@@ -69,22 +70,20 @@ jobs:
             shell: cmd
     
         steps:
-          - name: print the output of previous job step
-            shell: powershell
-            run: |
-              Start-Process powershell New-Item -ArgumentList "C:\actions-runner\_work\HelloWorldSampleApp\HelloWorldSampleApp\commit_sha.txt" -Verb RunAs
-              $commitSha = Get-Content commit_sha.txt
-              echo "Using Commit SHA: $commitSha"
               
-      #      - name: Set AWS credentials
-      #        uses: aws-actions/configure-aws-credentials@v1
-      #        with:
-      #          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY }}
-      #          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-      #          aws-region: ${{ secrets.AWS_REGION }}
+            - name: Set AWS credentials
+              uses: aws-actions/configure-aws-credentials@v1
+              with:
+                aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY }}
+                aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+                aws-region: ${{ secrets.AWS_REGION }}
            
-      #      - name: Download the zip file from S3 to EC2 folder
-      #        shell: powershell
+            - name: Download the zip file from S3 to EC2 folder
+              shell: powershell
+              run: |
+                C:\"Program Files"\Amazon\AWSCLIV2\aws s3 cp s3://${{ env.S3_BUCKET_NAME }}/web-app/commmit_sha.txt ${{ env.ZIP_DOWNLOAD_LOCATION }}
+                $output = cat commit_sha.txt
+                echo $output
       #        run: C:\"Program Files"\Amazon\AWSCLIV2\aws s3 cp s3://${{ env.S3_BUCKET_NAME }}/web-app/HelloWorldSampleApp.zip ${{ env.ZIP_DOWNLOAD_LOCATION }}
          
       #      - name: Unzipping the Zip file
