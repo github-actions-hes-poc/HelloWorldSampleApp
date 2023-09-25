@@ -99,7 +99,7 @@ jobs:
              run: |
               C:\"Program Files"\Amazon\AWSCLIV2\aws s3 cp s3://${{ env.S3_BUCKET_NAME }}/web-app/commit_sha.txt C:\actions-runner\_work
               $output = cat C:\actions-runner\_work\commit_sha.txt
-              C:\"Program Files"\Amazon\AWSCLIV2\aws s3 mv s3://${{ env.S3_BUCKET_NAME }}/web-app/HelloWorldSampleApp.zip s3://${{ env.S3_BUCKET_NAME }}/web-app/$output-HelloWorldSampleApp.zip
+              C:\"Program Files"\Amazon\AWSCLIV2\aws s3 mv s3://${{ env.S3_BUCKET_NAME }}/web-app/HelloWorldSampleApp.zip s3://${{ env.S3_BUCKET_NAME }}/web-app/HelloWorldSampleApp-$output.zip
                 
            - name: Delete the unzipped output folder & zipped file to allow new builds gracefully
              shell: powershell
