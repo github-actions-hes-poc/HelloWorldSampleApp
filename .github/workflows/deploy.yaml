@@ -107,6 +107,8 @@ jobs:
                Remove-Item ${{ env.DESTINATION }} -Recurse
                Remove-Item C:\actions-runner\_work\HelloWorldSampleApp.zip
             
-           - name: Delete the Commit SHA file from S3 bucket location 
+           - name: Delete the Commit SHA file from S3 bucket and EC2 location 
              shell: powershell
-             run: C:\"Program Files"\Amazon\AWSCLIV2\aws s3 rm s3://${{ env.S3_BUCKET_NAME }}/web-app/commit_sha.txt    
+             run: |
+               C:\"Program Files"\Amazon\AWSCLIV2\aws s3 rm s3://${{ env.S3_BUCKET_NAME }}/web-app/commit_sha.txt    
+               Remove-Item C:\actions-runner\_work\commit_sha.txt
