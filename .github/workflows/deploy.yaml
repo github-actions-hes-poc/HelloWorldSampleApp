@@ -88,5 +88,5 @@ jobs:
              shell: powershell
              env:
                COPY_LOCATION: ${{ secrets.COPY_LOCATION }}
-             run: |
-               Start-Process powershell -ArgumentList "NET STOP iisadmin /y" -Verb RunAs
+             run: Invoke-Expression "NET STOP iisadmin /y"
+
