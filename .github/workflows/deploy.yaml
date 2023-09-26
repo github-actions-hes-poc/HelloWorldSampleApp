@@ -88,5 +88,7 @@ jobs:
              shell: powershell
              env:
                COPY_LOCATION: ${{ secrets.COPY_LOCATION }}
-             run: Start-Process powershell -ArgumentList "-NoProfile -ExecutionPolicy Bypass -Command 'Invoke-Expression `"NET STOP iisadmin /y`"'" -Verb RunAs
-
+             run: |
+               if (Get-Service -Name w3svc | Where-Object { $_.Status -eq 'Running' }) {
+                iisreset /stop
+                }
