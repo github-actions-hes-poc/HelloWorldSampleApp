@@ -89,7 +89,7 @@ jobs:
              env:
                COPY_LOCATION: ${{ secrets.COPY_LOCATION }}
              run: |
-               Start-Process powershell -ArgumentList "iisreset /stop" -Verb RunAs
+               iisreset /stop
                Remove-Item ${{ env.IIS_FOLDER }}\*  -Recurse
                Copy-Item -Path ${{ env.COPY_LOCATION }}\* -Destination ${{ env.IIS_FOLDER }} -Recurse -Force
                Start-Process powershell -ArgumentList "iisreset /start" -Verb RunAs
