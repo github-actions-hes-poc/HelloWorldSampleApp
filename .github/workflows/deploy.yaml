@@ -79,15 +79,15 @@ jobs:
              shell: powershell
              run: |
                if (-Not (Test-Path 'C:\Program Files\Amazon\AWSCLI\aws.exe')) {
-                 Write-Host "AWS CLI is not installed. Installing..."
-                 $awsCliInstallerUrl = "https://awscli.amazonaws.com/AWSCLIV2.msi"
-                 $awsCliInstallerPath = Join-Path $env:TEMP "AWSCLIV2.msi"
-                 Invoke-WebRequest -Uri $awsCliInstallerUrl -OutFile $awsCliInstallerPath
-                 Start-Process -Wait -FilePath "msiexec.exe" -ArgumentList "/i", $awsCliInstallerPath, "/quiet"
+                Write-Host "AWS CLI is not installed. Installing..."
+                $awsCliInstallerUrl = "https://awscli.amazonaws.com/AWSCLIV2.msi"
+                $awsCliInstallerPath = Join-Path $env:TEMP "AWSCLIV2.msi"
+                Invoke-WebRequest -Uri $awsCliInstallerUrl -OutFile $awsCliInstallerPath
+                Start-Process -Wait -FilePath "msiexec.exe" -ArgumentList "/i", $awsCliInstallerPath, "/quiet"
                 } else {
-                Write-Host "AWS CLI is already installed."
-               }
-               }
+                  Write-Host "AWS CLI is already installed."
+                }
+
 
            # - name: Install the AWS CLI version V2
            #   shell: cmd
