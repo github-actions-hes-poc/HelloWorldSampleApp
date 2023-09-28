@@ -89,6 +89,12 @@ jobs:
                 }
 
 
+           - name: Check AWS CLI version
+             shell: cmd
+             run: |
+               cd C:\
+               aws --version
+               
            # - name: Install the AWS CLI version V2
            #   shell: cmd
            #   run: |
