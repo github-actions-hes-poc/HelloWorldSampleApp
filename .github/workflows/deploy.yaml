@@ -74,11 +74,17 @@ jobs:
                aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY }}
                aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
                aws-region: ${{ secrets.AWS_REGION }}
-           
+
+           - name: Install the AWS CLI version V2
+             shell: cmd
+             run: |
+               cd C:\
+               msiexec.exe /i https://awscli.amazonaws.com/AWSCLIV2.msi
+               aws --version
+               
            - name: Download the zip file from S3 to EC2 folder
              shell: powershell
-             run: |
-              C:\"Program Files"\Amazon\AWSCLIV2\aws s3 cp s3://${{ env.S3_BUCKET_NAME }}/web-app/HelloWorldSampleApp.zip ${{ env.ZIP_DOWNLOAD_LOCATION }}
+             run: aws s3 cp s3://${{ env.S3_BUCKET_NAME }}/web-app/HelloWorldSampleApp.zip ${{ env.ZIP_DOWNLOAD_LOCATION }}
                 
            - name: Unzipping the Zip file
              shell: powershell
