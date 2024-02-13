@@ -3,9 +3,9 @@ name: "Deploying a CI/CD for .NET sample app in ASP.NET 4.7 using GitHub Actions
 on:
   workflow_dispatch:
   push:
-    branches: [ "master", "develop" ]
-  pull_request:
     branches: [ "master" ]
+  # pull_request:
+  #   branches: [ "master" ]
 
 env:
   S3_BUCKET_NAME: ${{ secrets.S3_BUCKET_NAME }}
@@ -58,6 +58,7 @@ jobs:
               run: |
                 aws s3 cp ${{ env.BUILD }} s3://${{ env.S3_BUCKET_NAME }}/web-app/
                 aws s3 cp commit_sha.txt s3://${{ env.S3_BUCKET_NAME }}/web-app/
+                
       deploy:
        needs: build
        runs-on: [ self-hosted, Windows, X64 ]
