@@ -9,10 +9,10 @@ on:
 
 env:
   S3_BUCKET_NAME: ${{ secrets.S3_BUCKET_NAME }}
-  ZIP_DOWNLOAD_LOCATION: ${{ secrets.ZIP_DOWNLOAD_LOCATION }}
-  UNZIPPED_FOLDER_NAME: ${{ secrets.UNZIPPED_FOLDER_NAME }}
-  DESTINATION: ${{ secrets.DESTINATION }}
-  IIS_FOLDER: ${{ secrets.IIS_FOLDER }}
+  ZIP_DOWNLOAD_LOCATION: ${{ vars.ZIP_DOWNLOAD_LOCATION }}
+  UNZIPPED_FOLDER_NAME: ${{ vars.UNZIPPED_FOLDER_NAME }}
+  DESTINATION: ${{ vars.DESTINATION }}
+  IIS_FOLDER: ${{ vars.IIS_FOLDER }}
   
 jobs:
       build:
@@ -54,9 +54,9 @@ jobs:
             - name: Upload artifacts to Amazon S3
               shell: powershell
               env:
-                BUILD: ${{ secrets.BUILD }}
+                BUILD_PATH: ${{ vars.BUILD_PATH }}
               run: |
-                aws s3 cp ${{ env.BUILD }} s3://${{ env.S3_BUCKET_NAME }}/web-app/
+                aws s3 cp ${{ env.BUILD_PATH }}\ s3://${{ env.S3_BUCKET_NAME }}/web-app/
                 aws s3 cp commit_sha.txt s3://${{ env.S3_BUCKET_NAME }}/web-app/
                 
       deploy:
