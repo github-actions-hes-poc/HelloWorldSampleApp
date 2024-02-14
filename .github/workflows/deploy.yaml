@@ -56,7 +56,7 @@ jobs:
               env:
                 BUILD_PATH: ${{ vars.BUILD_PATH }}
               run: |
-                aws s3 cp ${{ env.BUILD_PATH }}\ s3://${{ env.S3_BUCKET_NAME }}/web-app/
+                aws s3 cp ${{ env.BUILD_PATH }} s3://${{ env.S3_BUCKET_NAME }}/web-app/
                 aws s3 cp commit_sha.txt s3://${{ env.S3_BUCKET_NAME }}/web-app/
                 
       deploy:
@@ -104,7 +104,7 @@ jobs:
            - name: Deploy to IIS Server
              shell: powershell
              env:
-               COPY_LOCATION: ${{ secrets.COPY_LOCATION }}
+               COPY_LOCATION: ${{ vars.COPY_LOCATION }}
              run: |
                iisreset /stop
                Remove-Item ${{ env.IIS_FOLDER }}\*  -Recurse
