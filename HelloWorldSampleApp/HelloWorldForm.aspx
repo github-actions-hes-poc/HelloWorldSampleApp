@@ -9,7 +9,7 @@
 <body>
     <form id="form1" runat="server">
         <div>
-            <%Response.Write("Hello World, it's Wednesday!!!") %>
+            <%Response.Write("Hello World, it's Monday!!!") %>
         </div>
     </form>
 </body>
